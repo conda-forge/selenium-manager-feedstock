@@ -9,7 +9,7 @@ source:
   sha256: d995a7120362c540a176180642da05165d5c5fc97409effd3a51ec0f0bfe3153
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
@@ -21,6 +21,8 @@ test:
   commands:
     - selenium-manager --version
     - selenium-manager --help
+    - '"${SE_MANAGER_PATH}" --version'  # [not win]
+    - '%SE_MANAGER_PATH% --version'  # [win]
 
 about:
   home: https://github.com/SeleniumHQ/selenium
