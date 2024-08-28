@@ -185,5 +185,5 @@ Feedstock Maintainers
 =====================
 
 * [@bollwyvl](https://github.com/bollwyvl/)
-* [@conda-forge/selenium](https://github.com/conda-forge/selenium/)
+* [@conda-forge/selenium](https://github.com/orgs/conda-forge/teams/selenium/)
 
