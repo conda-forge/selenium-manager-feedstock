@@ -1,4 +1,4 @@
-{% set version = "4.23.0" %}
+{% set version = "4.24.0" %}
 
 package:
   name: selenium-manager
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://github.com/SeleniumHQ/selenium/archive/refs/tags/selenium-{{ version }}.tar.gz
-  sha256: faa9ea42bd22a247bb1ca9e464a67b6db0bfa7a640c7750f3d21dbf8991eaf7d
+  sha256: 981015b21a120072c20f87f2a0bd8a677d65cf98464657cb0cf96094b1dd44a4
 
 build:
   number: 0
