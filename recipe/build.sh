@@ -4,7 +4,8 @@
 
 set -o xtrace -o nounset -o pipefail -o errexit
 
-export RUST_BACKTRACE=1
+export RUST_BACKTRACE=full
+export CARGO_PROFILE_RELEASE_BUILD_OVERRIDE_DEBUG=true
 
 if [ $(uname) = Darwin ] ; then
   export RUSTFLAGS="-C link-args=-Wl,-rpath,${PREFIX}/lib"
