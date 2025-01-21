@@ -1,0 +1,53 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/prefix-dev/recipe-format/main/schema.json
+
+schema_version: 1
+
+context:
+  version: 4.28.0
+
+package:
+  name: selenium-manager
+  version: ${{ version }}
+
+source:
+  url: https://github.com/SeleniumHQ/selenium/archive/refs/tags/selenium-${{ version }}.tar.gz
+  sha256: ac42a8827f280bb5ccc48c9490ea70aa5a04a2929a1a89e49ba5cc2ed6f36584
+
+build:
+  number: 0
+  script:
+    file: build-selenium-manager
+
+requirements:
+  build:
+    - ${{ compiler("c") }}
+    - ${{ stdlib("c") }}
+    - ${{ compiler('rust') }}
+    - cargo-bundle-licenses
+
+tests:
+  - script:
+      - selenium-manager --version
+      - selenium-manager --help
+      - if: not win
+        then: >-
+          "${SE_MANAGER_PATH}" --version
+      - if: win
+        then: >-
+          "%SE_MANAGER_PATH%" --version
+
+about:
+  homepage: https://github.com/SeleniumHQ/selenium
+  license: Apache-2.0
+  license_file:
+    - THIRDPARTY.yml
+    - LICENSE
+    - NOTICE
+  summary: |-
+    Selenium Manager is a standalone tool that automatically manages the browser
+    infrastructure required by Selenium (i.e., browsers and drivers).
+
+extra:
+  recipe-maintainers:
+    - conda-forge/selenium
+    - bollwyvl
