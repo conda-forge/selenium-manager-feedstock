@@ -31,7 +31,7 @@ tests:
       - selenium-manager --help
       - if: not win
         then: >-
-          "${SE_MANAGER_PATH} --version
+          "${SE_MANAGER_PATH}" --version
       - if: win
         then: >-
           "%SE_MANAGER_PATH%" --version
