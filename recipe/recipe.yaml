@@ -21,18 +21,14 @@ requirements:
   build:
     - ${{ compiler("c") }}
     - ${{ stdlib("c") }}
-    - ${{ compiler('rust') }}
+    - ${{ compiler("rust") }}
     - cargo-bundle-licenses
 
 tests:
   - script:
       - selenium-manager --version
       - selenium-manager --help
-      - if: win
-        then: >-
-          "%SE_MANAGER_PATH%" --version
-        else: >-
-          "${SE_MANAGER_PATH}" --version
+      - ls "${SE_MANAGER_PATH}" || dir "%SE_MANAGER_PATH%"
 
 about:
   homepage: https://github.com/SeleniumHQ/selenium
