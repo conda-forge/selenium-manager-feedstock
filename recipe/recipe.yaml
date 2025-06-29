@@ -2,7 +2,7 @@
 schema_version: 1
 
 context:
-  version: "4.33.0"
+  version: "4.34.0"
 
 package:
   name: selenium-manager
@@ -10,7 +10,7 @@ package:
 
 source:
   url: https://github.com/SeleniumHQ/selenium/archive/refs/tags/selenium-${{ version }}.tar.gz
-  sha256: 095056716a94cda4b532ba5de4a56c19b9793f8871df77cebb6123c4da0095d9
+  sha256: 3939922d10d7058d7c2298b600b285c0ed1116c3fc71e7d127582017954ac727
 
 build:
   number: 0
