@@ -187,6 +187,3 @@ Feedstock Maintainers
 * [@bollwyvl](https://github.com/bollwyvl/)
 * [@conda-forge/selenium](https://github.com/orgs/conda-forge/teams/selenium/)
 
-
-<!-- dummy commit to enable rerendering -->
-
