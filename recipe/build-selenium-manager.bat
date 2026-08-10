@@ -4,18 +4,18 @@
 cd rust
 
 :: build
-cargo auditable install --locked --root "%PREFIX%" --path . || goto :error
+cargo auditable install ^
+    --locked ^
+    --no-track ^
+    --root "%PREFIX%" ^
+    --path . ^
+    || goto :error
 
 :: move to scripts
 md %SCRIPTS% || echo "%SCRIPTS% already exists"
 move %PREFIX%\bin\selenium-manager.exe %SCRIPTS%
 
 cargo-bundle-licenses --format yaml --output %SRC_DIR%\THIRDPARTY.yml
-
-:: remove extra build files
-del /F /Q "%PREFIX%\.crates2.json"
-del /F /Q "%PREFIX%\.crates.toml"
-
 
 :: Copy the [de]activate scripts to %PREFIX%\etc\conda\[de]activate.d.
 :: This will allow them to be run on environment activation.

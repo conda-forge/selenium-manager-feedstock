@@ -13,14 +13,14 @@ fi
 cd rust
 
 # build statically linked binary with Rust
-cargo auditable install --locked --root "${PREFIX}" --path .
+cargo auditable install \
+  --locked \
+  --no-track \
+  --root "${PREFIX}" \
+  --path .
 
 # install cargo-license and dump licenses
 cargo-bundle-licenses --format yaml --output "${SRC_DIR}/THIRDPARTY.yml"
-
-# remove extra build files
-rm -f "${PREFIX}/.crates2.json"
-rm -f "${PREFIX}/.crates.toml"
 
 # Copy the [de]activate scripts to $PREFIX/etc/conda/[de]activate.d.
 # This will allow them to be run on environment activation.
