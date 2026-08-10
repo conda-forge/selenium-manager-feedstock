@@ -41,7 +41,6 @@ Current build status
                   <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/selenium-manager-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_" alt="variant">
                 </a>
               </td>
-<<<<<<< HEAD
             </tr><tr>
               <td>osx_arm64</td>
               <td>
@@ -49,8 +48,6 @@ Current build status
                   <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/selenium-manager-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_" alt="variant">
                 </a>
               </td>
-=======
->>>>>>> ADMIN/conda_forge_admin_53
             </tr>
           </tbody>
         </table>
