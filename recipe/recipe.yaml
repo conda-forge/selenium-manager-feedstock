@@ -35,7 +35,7 @@ tests:
       - ls "${SE_MANAGER_PATH}" || dir "%SE_MANAGER_PATH%"
 
 about:
-  homepage: https://github.com/SeleniuumHQ/selenium
+  homepage: https://github.com/SeleniumHQ/selenium
   license: Apache-2.0
   license_file:
     - THIRDPARTY.yml
