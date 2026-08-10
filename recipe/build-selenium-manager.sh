@@ -13,7 +13,7 @@ fi
 cd rust
 
 # build statically linked binary with Rust
-cargo install --locked --root "${PREFIX}" --path .
+cargo auditable install --locked --root "${PREFIX}" --path .
 
 # install cargo-license and dump licenses
 cargo-bundle-licenses --format yaml --output "${SRC_DIR}/THIRDPARTY.yml"

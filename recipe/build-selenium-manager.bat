@@ -4,7 +4,7 @@
 cd rust
 
 :: build
-cargo install --locked --root "%PREFIX%" --path . || goto :error
+cargo auditable install --locked --root "%PREFIX%" --path . || goto :error
 
 :: move to scripts
 md %SCRIPTS% || echo "%SCRIPTS% already exists"
