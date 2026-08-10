@@ -3,7 +3,7 @@ About selenium-manager-feedstock
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/selenium-manager-feedstock/blob/main/LICENSE.txt)
 
-Home: https://github.com/SeleniuumHQ/selenium
+Home: https://github.com/SeleniumHQ/selenium
 
 Package license: Apache-2.0
 
