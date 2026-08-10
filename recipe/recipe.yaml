@@ -2,7 +2,7 @@
 schema_version: 1
 
 context:
-  version: "4.46.0"
+  version: "4.47.0"
 
 package:
   name: selenium-manager
@@ -10,18 +10,22 @@ package:
 
 source:
   url: https://github.com/SeleniumHQ/selenium/archive/refs/tags/selenium-${{ version }}.tar.gz
-  sha256: ea5da0aa5f6e5a4e5735e9a1a2f21e574c6ccad2024bf243020c2c7009a0cd41
+  sha256: e40f8575789e84086ddd2590084a7d4734313e97aaf693128d6469771476cd99
 
 build:
   number: 0
   script:
+    env:
+      CARGO_PROFILE_RELEASE_LTO: fat
+      CARGO_PROFILE_RELEASE_STRIP: symbols
     file: build-selenium-manager
 
 requirements:
   build:
     - ${{ compiler("c") }}
-    - ${{ stdlib("c") }}
     - ${{ compiler("rust") }}
+    - ${{ stdlib("c") }}
+    - cargo-auditable
     - cargo-bundle-licenses
 
 tests:
