@@ -2,8 +2,7 @@
 schema_version: 1
 
 context:
-  version: "4.49.0"
-  prefix_env_var: ${{ "${PREFIX}" if unix else "%PREFIX%" }}
+  version: "4.50.0"
 
 package:
   name: selenium-manager
@@ -11,7 +10,7 @@ package:
 
 source:
   url: https://github.com/SeleniumHQ/selenium/archive/refs/tags/selenium-${{ version }}.tar.gz
-  sha256: 67ff5dd5f1f5b6d6e6965b383ecc9ee9a112e5a255b81bde9deefc2f20ba3cf5
+  sha256: a27b6e9cd5b4ecba078498c8a6c2ba74956cb93f7e206e50ad3e47faebbb921b
 
 build:
   number: 0
@@ -27,7 +26,7 @@ build:
         then:
           - export RUSTFLAGS="-C link-arg=-Wl,-rpath-link,${PREFIX}/lib -L${PREFIX}/lib"
       - cd rust
-      - cargo auditable install --locked --no-track --root=${{ prefix_env_var }} --path=.
+      - cargo auditable install --locked --no-track --root=${{ PREFIX }} --path=.
       - cargo-bundle-licenses --format=yaml --output=THIRDPARTY.yml
       - cd "${{ RECIPE_DIR }}"
       - python build-selenium-manager-env-json.py
