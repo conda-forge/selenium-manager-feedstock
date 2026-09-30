@@ -30,6 +30,10 @@ build:
       - cargo-bundle-licenses --format=yaml --output=THIRDPARTY.yml
       - cd "${{ RECIPE_DIR }}"
       - python build-selenium-manager-env-json.py
+      - if: win
+        then:
+          - md %SCRIPTS% || echo "%SCRIPTS% already exists"
+          - move %PREFIX%\bin\selenium-manager.exe %SCRIPTS%
 
 requirements:
   build:
