@@ -3,6 +3,7 @@ schema_version: 1
 
 context:
   version: "4.49.0"
+  prefix_env_var: ${{ "${PREFIX}" if unix else "%PREFIX%" }}
 
 package:
   name: selenium-manager
@@ -18,7 +19,18 @@ build:
     env:
       CARGO_PROFILE_RELEASE_LTO: fat
       CARGO_PROFILE_RELEASE_STRIP: symbols
-    file: build-selenium-manager
+    content:
+      - if: osx
+        then:
+          - export RUSTFLAGS="-C link-args=-Wl,-rpath,${PREFIX}/lib"
+      - if: linux
+        then:
+          - export RUSTFLAGS="-C link-arg=-Wl,-rpath-link,${PREFIX}/lib -L${PREFIX}/lib"
+      - cd rust
+      - cargo auditable install --locked --no-track --root=${{ prefix_env_var }} --path=.
+      - cargo-bundle-licenses --format=yaml --output=THIRDPARTY.yml
+      - cd "${{ RECIPE_DIR }}"
+      - python build-selenium-manager-env-json.py
 
 requirements:
   build:
@@ -27,8 +39,19 @@ requirements:
     - ${{ stdlib("c") }}
     - cargo-auditable
     - cargo-bundle-licenses
+    - python *
 
 tests:
+  - package_contents:
+      strict: true
+      bin:
+        - if: unix
+          then: selenium-manager
+      files:
+        - etc/conda/env_vars.d/selenium-manager.json
+        - if: win
+          then:
+            - Scripts/selenium-manager.exe
   - script:
       - selenium-manager --version
       - selenium-manager --help
@@ -38,7 +61,7 @@ about:
   homepage: https://github.com/SeleniumHQ/selenium
   license: Apache-2.0
   license_file:
-    - THIRDPARTY.yml
+    - rust/THIRDPARTY.yml
     - LICENSE
     - NOTICE
   summary: |-
