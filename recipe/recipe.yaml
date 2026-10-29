@@ -2,7 +2,8 @@
 schema_version: 1
 
 context:
-  version: "4.50.0"
+  version: "4.52.0"
+  env_d_json: selenium-manager.json
 
 package:
   name: selenium-manager
@@ -10,7 +11,7 @@ package:
 
 source:
   url: https://github.com/SeleniumHQ/selenium/archive/refs/tags/selenium-${{ version }}.tar.gz
-  sha256: a27b6e9cd5b4ecba078498c8a6c2ba74956cb93f7e206e50ad3e47faebbb921b
+  sha256: 3282451cad462cd5b7c941fbb71b8db1ace6d6ab160d2c90eed7c984068f4b1a
 
 build:
   number: 0
@@ -19,6 +20,17 @@ build:
       CARGO_PROFILE_RELEASE_LTO: fat
       CARGO_PROFILE_RELEASE_STRIP: symbols
     content:
+      - if: unix
+        then:
+          - mkdir -p "${PREFIX}/etc/conda/env_vars.d"
+          - |-
+            cat > "${PREFIX}/etc/conda/env_vars.d/${{ env_d_json }}" << 'EOF'
+            {"SE_MANAGER_PATH":"${PREFIX}/bin/selenium-manager"}
+            EOF
+        else:
+          - mkdir %PREFIX%\etc\conda\env_vars.d
+          - |-
+            echo {"SE_MANAGER_PATH":"%PREFIX%\\Scripts\\selenium-manager.exe"} > "%PREFIX%\etc\conda\env_vars.d\${{ env_d_json }}"
       - if: osx
         then:
           - export RUSTFLAGS="-C link-args=-Wl,-rpath,${PREFIX}/lib"
@@ -29,11 +41,20 @@ build:
       - cargo auditable install --locked --no-track --root=${{ PREFIX }} --path=.
       - cargo-bundle-licenses --format=yaml --output=THIRDPARTY.yml
       - cd "${{ RECIPE_DIR }}"
-      - python build-selenium-manager-env-json.py
       - if: win
         then:
-          - md %SCRIPTS% || echo "%SCRIPTS% already exists"
-          - move %PREFIX%\bin\selenium-manager.exe %SCRIPTS%
+          - md "%SCRIPTS%" || echo "%SCRIPTS% already exists"
+          - move "%PREFIX%\bin\selenium-manager.exe" "%SCRIPTS%"
+          - mkdir %PREFIX%\etc\conda\env_vars.d
+          - |-
+            echo {"SE_MANAGER_PATH":"%PREFIX%\\Scripts\\selenium-manager.exe"} > "%PREFIX%\etc\conda\env_vars.d\${{ env_d_json }}"
+      - if: unix
+        then:
+          - |-
+            mkdir -p "${PREFIX}/etc/conda/env_vars.d"
+            cat > "${PREFIX}/etc/conda/env_vars.d/${{ env_d_json }}" << 'EOF'
+            {"SE_MANAGER_PATH":"${PREFIX}/bin/selenium-manager"}
+            EOF
 
 requirements:
   build:
@@ -42,23 +63,20 @@ requirements:
     - ${{ stdlib("c") }}
     - cargo-auditable
     - cargo-bundle-licenses
-    - python *
 
 tests:
   - package_contents:
       strict: true
       bin:
-        - if: unix
-          then: selenium-manager
+        - selenium-manager
       files:
-        - etc/conda/env_vars.d/selenium-manager.json
-        - if: win
-          then:
-            - Scripts/selenium-manager.exe
+        - etc/conda/env_vars.d/${{ env_d_json }}
   - script:
       - selenium-manager --version
       - selenium-manager --help
-      - ls "${SE_MANAGER_PATH}" || dir "%SE_MANAGER_PATH%"
+      - if: unix
+        then: ls "${SE_MANAGER_PATH}"
+        else: dir "%SE_MANAGER_PATH%"
 
 about:
   homepage: https://github.com/SeleniumHQ/selenium
