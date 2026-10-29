@@ -1,5 +1,3 @@
-MACOSX_DEPLOYMENT_TARGET:
-- '11.0'
 MACOSX_SDK_VERSION:
 - '11.0'
 c_compiler:
@@ -20,3 +18,5 @@ rust_compiler:
 - rust
 target_platform:
 - osx-arm64
+zstd:
+- '1.5'
