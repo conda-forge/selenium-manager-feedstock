@@ -52,7 +52,7 @@ build:
         then:
           - |-
             mkdir -p "${PREFIX}/etc/conda/env_vars.d"
-            cat > "${PREFIX}/etc/conda/env_vars.d/${{ env_d_json }}" << 'EOF'
+            cat > "${PREFIX}/etc/conda/env_vars.d/${{ env_d_json }}" << EOF
             {"SE_MANAGER_PATH":"${PREFIX}/bin/selenium-manager"}
             EOF
 
