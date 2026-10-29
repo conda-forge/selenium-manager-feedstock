@@ -19,12 +19,13 @@ build:
     env:
       CARGO_PROFILE_RELEASE_LTO: fat
       CARGO_PROFILE_RELEASE_STRIP: symbols
+      ZSTD_SYS_USE_PKG_CONFIG: "1"
     content:
       - if: unix
         then:
           - mkdir -p "${PREFIX}/etc/conda/env_vars.d"
           - |-
-            cat > "${PREFIX}/etc/conda/env_vars.d/${{ env_d_json }}" << 'EOF'
+            cat <<EOF > "${PREFIX}/etc/conda/env_vars.d/${{ env_d_json }}"
             {"SE_MANAGER_PATH":"${PREFIX}/bin/selenium-manager"}
             EOF
         else:
@@ -53,6 +54,9 @@ requirements:
     - ${{ stdlib("c") }}
     - cargo-auditable
     - cargo-bundle-licenses
+    - pkg-config
+  host:
+    - zstd
 
 tests:
   - package_contents:
