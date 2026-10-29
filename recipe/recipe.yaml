@@ -45,16 +45,6 @@ build:
         then:
           - md "%SCRIPTS%" || echo "%SCRIPTS% already exists"
           - move "%PREFIX%\bin\selenium-manager.exe" "%SCRIPTS%"
-          - mkdir %PREFIX%\etc\conda\env_vars.d
-          - |-
-            echo {"SE_MANAGER_PATH":"%PREFIX%\\Scripts\\selenium-manager.exe"} > "%PREFIX%\etc\conda\env_vars.d\${{ env_d_json }}"
-      - if: unix
-        then:
-          - |-
-            mkdir -p "${PREFIX}/etc/conda/env_vars.d"
-            cat > "${PREFIX}/etc/conda/env_vars.d/${{ env_d_json }}" << EOF
-            {"SE_MANAGER_PATH":"${PREFIX}/bin/selenium-manager"}
-            EOF
 
 requirements:
   build:
