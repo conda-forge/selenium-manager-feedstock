@@ -18,3 +18,5 @@ rust_compiler:
 - rust
 target_platform:
 - osx-arm64
+zstd:
+- '1.5'
